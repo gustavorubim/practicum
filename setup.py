@@ -9,7 +9,7 @@ setup(
         'torchvision',
         'torchaudio',
         'numpy',
-        'PyYAM',
+        'PyYAML',
         'scikit-learn',
         'scipy',
         'matplotlib',
