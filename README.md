@@ -69,6 +69,9 @@ tensorboard --logdir logs
 anomaly_detection/
 ├── config/             # Configuration files
 ├── data/               # Data loading and preprocessing
+│   ├── preprocessing.py  # Image normalization, resizing, grayscale
+│   ├── augmentation.py   # Data augmentation transforms
+│   └── dataset.py       # PreprocessingPipeline implementation
 ├── models/             # Autoencoder implementations
 ├── training/           # Training pipeline
 ├── inference/          # Inference and evaluation
@@ -76,6 +79,31 @@ anomaly_detection/
 ├── utils/              # Utility functions
 ├── scripts/            # Executable scripts
 └── notebooks/          # Jupyter notebooks for analysis
+```
+
+## Data Preprocessing
+
+The system includes a comprehensive `PreprocessingPipeline` that handles:
+
+- Image normalization (to [0,1] or custom mean/std)
+- Resizing to target dimensions
+- Grayscale conversion (optional)
+- Data augmentation (training only)
+- Configurable through YAML files
+
+Example configuration:
+```yaml
+preprocessing:
+  target_size: [256, 256]
+  grayscale: false
+  normalize:
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+  augmentations:
+    flip: true
+    rotation: 15
+    brightness: 0.2
+    contrast: 0.2
 ```
 
 ## Dataset

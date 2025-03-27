@@ -14,6 +14,9 @@ class CNNAutoencoder(BaseAutoencoder):
         Args:
             config: Model configuration dictionary
         """
+        # Get model-specific config
+        model_config = config.get("models", {}).get("cnn_ae", {})
+        config.update(model_config)
         super().__init__(config)
         self.encoder = self._build_encoder()
         self.decoder = self._build_decoder()
