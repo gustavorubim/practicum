@@ -1,0 +1,41 @@
+# Default configuration for anomaly detection project
+
+data:
+  root: "../zipper"  # Path to dataset
+  image_size: [256, 256]  # Input image size
+  batch_size: 32
+  num_workers: 4
+  train_split: 0.8  # Train/val split ratio
+  seed: 42  # Random seed for reproducibility
+
+training:
+  epochs: 100
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  patience: 10  # Early stopping patience
+  checkpoint_dir: "../checkpoints"
+  log_dir: "../logs"  # TensorBoard logs
+  device: "cuda"  # or "cpu"
+
+models:
+  cnn_ae:
+    latent_dim: 512
+    channels: [64, 128, 256, 512]
+    dropout: 0.1
+  resnet_ae:
+    latent_dim: 1024
+    base_model: "resnet18"
+  vit_ae:
+    patch_size: 16
+    dim: 768
+    depth: 6
+    heads: 8
+  diffusion_ae:
+    timesteps: 1000
+    dim: 64
+    dim_mults: [1, 2, 4, 8]
+
+inference:
+  threshold: 0.5  # Default anomaly threshold
+  batch_size: 16
+  output_dir: "../results"
