@@ -39,7 +39,53 @@ def test_normalize_image(sample_image):
 def test_resize_image(sample_image):
     """Test image resizing functionality."""
     # Test simple resize
-    resized = resize_image(sample_image, (50, 50))
+    resized = resize_image(sample_image, (50, 50), keep_aspect=False)
+    assert resized.shape == (50, 50, 3)
+    
+
+def test_preprocessing_pipeline(sample_image):
+    """Test the preprocessing pipeline functionality."""
+    from anomaly_detection.data.preprocessing import PreprocessingPipeline, normalize_image, resize_image
+    
+    # Create pipeline with multiple steps
+    pipeline = (
+        PreprocessingPipeline()
+        .add_step(lambda x: resize_image(x, (50, 50)))
+        .add_step(normalize_image)
+    )
+    
+    # Process image through pipeline
+    processed = pipeline(sample_image)
+    
+    # Verify results
+    assert processed.shape == (50, 50, 3)
+    assert processed.dtype == np.float32
+    assert processed.min() >= 0.0
+    assert processed.max() <= 1.0
+    
+    # Test empty pipeline
+    empty_pipeline = PreprocessingPipeline()
+    assert np.allclose(empty_pipeline(sample_image), sample_image)
+    # Test aspect ratio preservation
+    resized = resize_image(sample_image, (50, 100), keep_aspect=True)
+    assert resized.shape == (50, 100, 3)
+    
+    # Test with padding
+    resized = resize_image(
+        sample_image,
+        (200, 200),
+        keep_aspect=True,
+        padding_mode='reflect'
+    )
+    assert resized.shape == (200, 200, 3)
+    assert not np.allclose(resized[0,0], 0)  # Should have reflected content
+    
+    # Test different interpolation methods
+    resized = resize_image(
+        sample_image,
+        (50, 50),
+        interpolation=cv2.INTER_NEAREST
+    )
     assert resized.shape == (50, 50, 3)
     
     # Test aspect ratio preservation
