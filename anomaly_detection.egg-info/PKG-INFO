@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: anomaly_detection
+Version: 0.1
+Requires-Dist: torch>=1.13.1
+Requires-Dist: torchvision>=0.14.1
+Requires-Dist: torchaudio>=0.13.1
+Requires-Dist: numpy>=1.23.5
+Requires-Dist: PyYAML>=6.0

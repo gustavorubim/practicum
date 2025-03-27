@@ -213,7 +213,7 @@ def load_config(config_path: str) -> Dict[str, Any]:
 def main():
     """Main training function."""
     # Load configuration
-    config = load_config("config/default.yaml")
+    config = load_config("anomaly_detection/config/default.yaml")
 
     # Initialize model (replace with actual model class)
     from anomaly_detection.models.cnn_ae import CNNAutoencoder

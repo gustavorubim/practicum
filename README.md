@@ -18,7 +18,7 @@ This project implements a comprehensive anomaly detection system using multiple 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/anomaly-detection.git
+   git clone https://github.com/gustavorubim/anomaly-detection.git
    cd anomaly-detection
    ```
 

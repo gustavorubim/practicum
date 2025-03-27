@@ -1,7 +1,7 @@
 # Default configuration for anomaly detection project
 
 data:
-  root: "../zipper"  # Path to dataset
+  root: "./zipper"  # Path to dataset folder (contains train/test directly)
   image_size: [256, 256]  # Input image size
   batch_size: 32
   num_workers: 4
@@ -9,7 +9,7 @@ data:
   seed: 42  # Random seed for reproducibility
 
 training:
-  epochs: 100
+  epochs: 10
   learning_rate: 0.001
   weight_decay: 0.0001
   patience: 10  # Early stopping patience

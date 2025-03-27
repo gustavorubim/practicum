@@ -51,7 +51,7 @@ def calculate_metrics(
     
     # Calculate image-level metrics
     metrics = {
-        "image_auroc": roc_auc_score(labels, image_scores),
+        "image_auroc": 0.5 if len(np.unique(labels)) == 1 else roc_auc_score(labels, image_scores),
         "image_aupr": average_precision_score(labels, image_scores),
     }
 

@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from typing import Tuple, Optional, Dict, List
+from typing import Tuple, Optional, Dict, List, Any
 
 import cv2
 import numpy as np
@@ -32,7 +32,7 @@ class MVTecDataset(Dataset):
             good_only: Whether to only load good/normal samples
             image_size: Target image size (H, W)
         """
-        self.root = Path(root) / category
+        self.root = Path(root)
         self.split = split
         self.good_only = good_only
         self.image_size = image_size
