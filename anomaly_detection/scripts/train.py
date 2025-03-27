@@ -12,7 +12,7 @@ from torch.optim import AdamW
 from torch.optim.lr_scheduler import CosineAnnealingLR, ReduceLROnPlateau
 
 from anomaly_detection.data.dataset import create_datasets
-from anomaly_detection.models.base import BaseAutoencoder
+from anomaly_detection.models import BaseAutoencoder
 from anomaly_detection.utils.logger import setup_logger
 from anomaly_detection.utils.metrics import calculate_metrics
 
@@ -215,9 +215,9 @@ def main():
     # Load configuration
     config = load_config("anomaly_detection/config/default.yaml")
 
-    # Initialize model (replace with actual model class)
-    from anomaly_detection.models.cnn_ae import CNNAutoencoder
-    model = CNNAutoencoder(config["models"]["cnn_ae"])
+    # Initialize model using factory
+    from anomaly_detection.models import get_model
+    model = get_model(config)
 
     # Train model
     trainer = Trainer(config, model)

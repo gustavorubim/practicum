@@ -1,5 +1,7 @@
 # Default configuration for anomaly detection project
 
+model_type: "cnn"  # Options: cnn, resnet, vit, diffusion
+
 data:
   root: "./zipper"  # Path to dataset folder (contains train/test directly)
   image_size: [256, 256]  # Input image size
@@ -9,7 +11,7 @@ data:
   seed: 42  # Random seed for reproducibility
 
 training:
-  epochs: 10
+  epochs: 100  # Number of training epochs
   learning_rate: 0.001
   weight_decay: 0.0001
   patience: 10  # Early stopping patience
@@ -25,15 +27,21 @@ models:
   resnet_ae:
     latent_dim: 1024
     base_model: "resnet18"
+    dropout: 0.1
+    pretrained: true
   vit_ae:
     patch_size: 16
     dim: 768
     depth: 6
     heads: 8
+    pretrained: true
+    dropout: 0.1
   diffusion_ae:
     timesteps: 1000
     dim: 64
     dim_mults: [1, 2, 4, 8]
+    beta_schedule: "linear"
+    prediction_type: "epsilon"
 
 inference:
   threshold: 0.5  # Default anomaly threshold

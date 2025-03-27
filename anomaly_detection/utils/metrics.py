@@ -42,7 +42,10 @@ def calculate_metrics(
             
             # Pixel-level scores (only for anomalous images)
             if masks.sum() > 0:
-                pixel_scores.extend(errors[masks.bool()].cpu().numpy())
+                # Handle both single-channel and 3-channel masks
+                if masks.shape[1] == 1:  # Single-channel mask
+                    masks = masks.expand_as(errors).bool()
+                pixel_scores.extend(errors[masks].cpu().numpy())
                 pixel_labels.extend(masks[masks.bool()].cpu().numpy())
 
     # Convert to numpy arrays
@@ -61,7 +64,7 @@ def calculate_metrics(
         pixel_labels = np.array(pixel_labels)
         
         metrics.update({
-            "pixel_auroc": roc_auc_score(pixel_labels, pixel_scores),
+            "pixel_auroc": 0.5 if len(np.unique(pixel_labels)) == 1 else roc_auc_score(pixel_labels, pixel_scores),
             "pixel_aupr": average_precision_score(pixel_labels, pixel_scores),
         })
 
